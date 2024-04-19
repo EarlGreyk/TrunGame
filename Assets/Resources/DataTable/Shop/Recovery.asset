@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ffab6283274e54f87a97c307a8ebaa, type: 3}
+  m_Name: Recovery
+  m_EditorClassIdentifier: 
+  _ThingType: 6
+  _TreePrice: 4
+  _MetalPrice: 0
+  _StonePrice: 0
+  _TreeValue: 4
+  _MetalValue: 0
+  _StoneValue: 0
