@@ -75,7 +75,7 @@ public class UImanager : MonoBehaviour
     }
     public void UIStart()
     {
-        StartCoroutine(ButtonInit());
+        //StartCoroutine(ButtonInit());
     }
 
 
@@ -95,8 +95,7 @@ public class UImanager : MonoBehaviour
                 {
                     GameManager.instance.Player.IsStop = false;
                 }
-            }
-                
+            }                
         }
         if(Input.GetKeyDown(KeyCode.I))
         {
@@ -110,8 +109,7 @@ public class UImanager : MonoBehaviour
                 GameManager.instance.Player.IsStop = false;
             }
         }
-            
-        
+
     }
 
 
@@ -134,10 +132,6 @@ public class UImanager : MonoBehaviour
             
         }
     }
-   
-  
-
-
     public void ClosePopup(UI_Popup popup) 
     {
         //팝업이 존재하고 현재 열려 있는 openpopus창 목록에 존재함.
@@ -173,14 +167,14 @@ public class UImanager : MonoBehaviour
     {
         SceanLoad.Instance.LoadStartSCean();
     }
-    IEnumerator ButtonInit()
-    {
-        yield return new WaitForSeconds(1.0f);
-        UI_Popup uI_Popup = null;
-        uI_Popup = OptionManager.instance.ButtonPopup.GetComponent<UI_Popup>();
-        _OptionButton.onClick.AddListener(() => OpenPopup(uI_Popup));
-        yield return null;
-    }
+    //IEnumerator ButtonInit()
+    //{
+    //    yield return new WaitForSeconds(1.0f);
+    //    UI_Popup uI_Popup = null;
+    //    uI_Popup = OptionManager.instance.ButtonPopup.GetComponent<UI_Popup>();
+    //    _OptionButton.onClick.AddListener(() => OpenPopup(uI_Popup));
+    //    yield return null;
+    //}
     
     public void LogTextSet(string text)
     {

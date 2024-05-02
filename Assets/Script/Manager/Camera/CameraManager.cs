@@ -12,6 +12,8 @@ public class CameraManager : MonoBehaviour
 
     private Creture Target;
 
+    private float MaxSize;
+
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class CameraManager : MonoBehaviour
         Target = GameManager.instance.Player;
         transform.position = Target.transform.position;
         CameraVec = new Vector3(0, 12, -7);
+        MaxSize = GameSetManager.Instance.Size * 2;
     }
 
     private void Update()
@@ -120,18 +123,31 @@ public class CameraManager : MonoBehaviour
         switch(key)
         {
             case KeyCode.A:
-                Camera.main.transform.position = CameraVec - new Vector3(0.1f, 0, 0);
+                if(CameraVec.x -0.1f > 0)
+                {
+                    Camera.main.transform.position = CameraVec + new Vector3(-0.1f, 0, 0);
+                }
                 break;
             case KeyCode.D:
-                Camera.main.transform.position = CameraVec + new Vector3(0.1f, 0, 0);
+                if (CameraVec.x + 0.1f < MaxSize)
+                {
+                    Camera.main.transform.position = CameraVec + new Vector3(0.1f, 0, 0);
+                }
                 break;
             case KeyCode.W:
-                Camera.main.transform.position = CameraVec + new Vector3(0, 0, 0.1f);
+                if (CameraVec.z + 0.1f < MaxSize-10)
+                {
+                    Camera.main.transform.position = CameraVec + new Vector3(0, 0, 0.1f);
+                }
                 break;
             case KeyCode.S:
-                Camera.main.transform.position = CameraVec + new Vector3(0, 0, -0.1f);
+                if (CameraVec.z - 0.1f > -10)
+                {
+                    Camera.main.transform.position = CameraVec + new Vector3(0, 0, -0.1f);
+                }
                 break;
         }
+        
         CameraVec = Camera.main.transform.position;
     }
 

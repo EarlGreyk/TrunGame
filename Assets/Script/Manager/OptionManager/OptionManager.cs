@@ -16,17 +16,16 @@ public class OptionManager : MonoBehaviour
     private Button _Button;
     public Button Button { get { return _Button; }}
 
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            instance.ButtonSet(this.Button);
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+    //private void Awake()
+    //{
+    //    if (instance != null)
+    //    {
+    //        instance.ButtonSet(this.Button);
+    //        Destroy(gameObject);
+    //        return;
+    //    }
+    //    instance = this;
+    //}
 
 
     public void ButtonSet(Button button)

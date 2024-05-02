@@ -36,8 +36,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _BlockParent;
-    //아래 구문을 배열로 분할해볼 수 있음.
-    //아래는 몬스터와 아이템 자원의 재배분배 등을 생성.
+
 
     private Block[,] _BlockArray;
     public Block[,] BlockArray { get { return _BlockArray; } }
@@ -203,13 +202,14 @@ public class GameManager : MonoBehaviour
         //가로
         for (int i = 0; i < Gsm.Size ; i++)
         {
-            int z = i * 2;
+            int X = i * 2;
             //세로
             for (int k = 0; k < Gsm.Size ; k++)
             {
-                int x = k * 2;
-                GameObject LastcreatObject =  Instantiate(Gsm.BlockPrefabs[(int)Gsm.fdtype], _BlockParent.transform);
-                LastcreatObject.transform.position = new Vector3(x, 0, z);
+                int Z = k * 2;
+                GameObject LastcreatObject =  Instantiate(Gsm.BlockPrefabs[(int)Gsm.fdtype],
+                    _BlockParent.transform);
+                LastcreatObject.transform.position = new Vector3(X, 0, Z);
                 LastcreatObject.name = i.ToString() + " , " + k.ToString();
                 _BlockArray[i, k] = LastcreatObject.GetComponent<Block>();
 
@@ -263,7 +263,6 @@ public class GameManager : MonoBehaviour
     {
          List<Block> _BlockList = new List<Block>();
         
-        //거리비교를 하기쉽게 리스트로 정렬합니다.
         for(int i=0; i< _BlockArray.GetLength(0); i++)
         {
             for(int k=0; k< _BlockArray.GetLength(1);k++)
@@ -276,19 +275,12 @@ public class GameManager : MonoBehaviour
 
             }
         }
-
-        
         if(_BlockList.Count>0)
         {
 
-            //3 : 2에서 지정한 대상자를 리스트에서 지운후 남은 목록에서 시행
-            // EnemyBuild 는 최소 거리가 4칸보다 멀어야함. 4칸 = 8
-            // 초기화
             int rance = 0;
             Block block = null;
             int Value = 0;
-           
-
             while (true)
             {
                 if (_BlockList.Count > 0 && Value <Maxvalue)
@@ -297,16 +289,13 @@ public class GameManager : MonoBehaviour
                     _BlockList[rance].ObjectSet(type);
                     block = _BlockList[rance];
                     _BlockList.Remove(block);
-                    Value++;
-                    
-                    
+                    Value++;  
                 }
                 else
                 {
                     
                     break;
                 }
-                //지점으로 부터 해당범위내엔 존재할 수 없기 떄문에 전부 제거.
                 for (int k = _BlockList.Count - 1; k >= 0; k--)
                 {
                     Vector3 v = _BlockList[k].transform.position;
@@ -543,7 +532,8 @@ public class GameManager : MonoBehaviour
     private PlayerCreture LoadPlayer(PlayerSaveData playerSaveData)
     {
         PlayerCreture player = null;
-        GameObject LastGameObject = Instantiate(GameSetManager.Instance.PlayerPrefabs[(int)GameSetManager.Instance.PType]);
+        GameObject LastGameObject = Instantiate(GameSetManager.Instance.
+            PlayerPrefabs[(int)GameSetManager.Instance.PType]);
         player = LastGameObject.GetComponent<PlayerCreture>();
         player.gameObject.transform.position = playerSaveData.pos;
         player.name = playerSaveData.name;
@@ -605,7 +595,7 @@ public class GameManager : MonoBehaviour
         block.Value = blockSaveData.value;
         block.isobejct = blockSaveData.isObject;
         block.Cloud.gameObject.SetActive(blockSaveData.cloud);
-        block.name = (blockSaveData.pos.z/2).ToString() + " , " + (blockSaveData.pos.x/2).ToString();
+        block.name = (blockSaveData.pos.x/2).ToString() + " , " + (blockSaveData.pos.z/2).ToString();
 
         if (blockSaveData.mbcheck ==true)
         {

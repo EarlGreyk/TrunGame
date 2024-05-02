@@ -110,7 +110,7 @@ public class SceanLoaderManager : MonoBehaviour
             if (scene.name == "MainScean")
             {
                 GameManager.instance.GameStart();
-                UImanager.Instance.UIStart();
+               // UImanager.Instance.UIStart();
             }
             StartCoroutine(Fade(false));
             

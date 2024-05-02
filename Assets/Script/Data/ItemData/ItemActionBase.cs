@@ -72,6 +72,7 @@ public class ItemActionBase : ScriptableObject
                 break;
             case StateType.MaxHP:
                 GameManager.instance.Player.MaxHp += _Value;
+                GameManager.instance.Player.Hp += _Value;
                 UImanager.Instance.LogTextSet("플레이어 최대체력 증가 : " + _Value);
                 break;
             case StateType.MaxHand:
