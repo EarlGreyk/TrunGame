@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 [System.Serializable]
@@ -136,6 +137,8 @@ public class MonsterAI : MonoBehaviour
     //이동해야할 타겟블록 반환.
     public Block TargetBlock()
     {
+        startPos = Vector3Int.FloorToInt(monster.transform.position);
+        targetPos = Vector3Int.FloorToInt(monster.PTarget.transform.position);
         PathFinding();
         int x = FinalNodeList[1].x;
         int z = FinalNodeList[1].z;

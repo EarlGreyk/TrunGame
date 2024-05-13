@@ -181,7 +181,7 @@ namespace MonsterStateAction
     public class MonsterPMoveState : MonsterBaseState
     {
         public MonsterPMoveState(MonsterCreture creture) : base(creture) { }
-        private Block TargetBlock = null;
+        private Block TargetBlock;
         private Vector3 vel = Vector3.zero;
     
 
@@ -192,7 +192,7 @@ namespace MonsterStateAction
             _Time = 0f;
             _creture.AI.startPos = Vector3Int.FloorToInt(_creture.transform.position);
             _creture.AI.targetPos = Vector3Int.FloorToInt(_creture.PTarget.transform.position);
-            TargetBlock = _creture.AI.TargetBlock();
+            TargetBlock = _creture.TargetBlock;
             CameraManager.instance.TargetSet(_creture);
 
             if (TargetBlock != null)
@@ -225,7 +225,11 @@ namespace MonsterStateAction
         public override void OnstateExit()
         {
             _creture.IsAction = false;
+            _creture.CurrentBlock.isobejct = false;
+            _creture.CurrentBlock.Monster = null;
             _creture.CurrentBlock = TargetBlock;
+            TargetBlock.isobejct = true;
+            TargetBlock.Monster = _creture;
 
             OnStateAnimation("Idle");
         }
@@ -241,11 +245,7 @@ namespace MonsterStateAction
             _creture.transform.position = Vector3.SmoothDamp(_creture.transform.position, TargetBlock.transform.position, ref vel, _Anifloat);
         }
 
-        private Block TestBlockSerch()
-        {
-            Block Tblock = null;
-            return Tblock;
-        }
+   
 
         private Block TargetBlockSet()
         {

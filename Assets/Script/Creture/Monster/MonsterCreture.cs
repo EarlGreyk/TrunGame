@@ -22,6 +22,8 @@ public class MonsterCreture : Creture, CretureHit
 
     private State _curstate;
     private MonsterFSM _fsm;
+    private MonsterAI _ai;
+    public MonsterAI AI { get { return _ai; } }
 
 
     protected string _MonsterName;
@@ -54,10 +56,18 @@ public class MonsterCreture : Creture, CretureHit
     private void MonsterInit()
     {
         _fsm = new MonsterFSM(new MonsterNoneState(this));
+        _ai = GetComponent<MonsterAI>();
         _Animator = GetComponent<Animator>();
         _isAction = false;
         _isTurn = false;
         _curstate = State.None;
+
+        int x = GameSetManager.Instance.Size;
+        int z = GameSetManager.Instance.Size;
+        _ai.topRight = Vector3Int.FloorToInt(GameManager.instance.BlockArray[x-1, z-1].transform.position);
+        _ai.bottomLeft = Vector3Int.FloorToInt(GameManager.instance.BlockArray[0, 0].transform.position);
+
+
 
         //임시값입니다. 데이터로 가져와야합니다
         //몬스터바다 아래는 [각자]있어야 하는 존재값입니다.
@@ -82,15 +92,18 @@ public class MonsterCreture : Creture, CretureHit
                     {
                         
                         Rotation(PTarget.transform.position);
+                        TargetBlock = AI.TargetBlock();
                         if (CheckAttack() )
                         {
                             if (CheckAc())
                             {
                                 ChangeState(State.Attack);
+                                return;
 
                             }else
                             {
                                 ChangeState(State.None);
+                                return;
                             }
                         }
                         else
@@ -202,23 +215,19 @@ public class MonsterCreture : Creture, CretureHit
         return check;
     }
 
+    
+
+
     private bool CheckGarthing()
     {
         bool check = false;
 
-        List<Block> MoveBlock = new List<Block>(9);
-        LayerMask layer = LayerMask.GetMask("Plan");
-        Collider[] colls = Physics.OverlapSphere(transform.position + transform.forward, 0.5f, layer);
-        for (int i = 0; i < colls.Length; i++)
+        
+        if (TargetBlock.BlockType == Block.type.Material || TargetBlock.BlockType == Block.type.Tree)
         {
-            Block block = colls[i].GetComponent<Block>();
-            Block.type type = block.BlockType;
-            if (type == Block.type.Material || type == Block.type.Tree)
-            {
-                check = true;
-                //BTarget = block;
-                return check;
-            }
+            check = true;
+            //BTarget = block;
+            return check;
         }
 
 
